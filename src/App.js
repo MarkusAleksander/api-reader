@@ -3,12 +3,17 @@ import './App.css';
 
 import Auxillary from "./hoc/Auxillary";
 import LayoutColumn from "./components/Layouts/LayoutColumn";
+import LayoutForm from "./components/Layouts/LayoutForm";
+
+import APIBuilder from "./components/APIBuilder/APIBuilder";
 
 function App() {
   return (
     <Auxillary>
       <LayoutColumn>
-        <p>Content</p>
+        <LayoutForm>
+          <APIBuilder/>
+        </LayoutForm>
       </LayoutColumn>
       <LayoutColumn>
         <p>Content</p>

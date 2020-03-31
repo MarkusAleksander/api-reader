@@ -1,8 +1,8 @@
 import React from "react";
 
-function LayoutColumn (props) {
+const LayoutColumn = (props) => {
     return (
-    <div className="column">{props}</div>
+    <div className="column">{props.children}</div>
     )
 }
 

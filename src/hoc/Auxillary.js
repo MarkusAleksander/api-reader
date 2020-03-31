@@ -1,8 +1,8 @@
 import React from "react";
 
-function Auxillary (props) {
+const Auxillary = (props) => {
     return (
-    {props}
+    props.children
     )
 }
 
