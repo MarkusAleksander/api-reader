@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import FormRow from "./FormRow";
+import axios from "axios";
 
+import FormRow from "./FormRow";
 import FormInput from "./Inputs/FormInput";
 import FormLabel from "./Inputs/FormLabel";
 import FormButton from "./Inputs/FormButton";
@@ -12,6 +13,10 @@ class APIBuilder extends Component {
 
         this.state = {
             endpoint: "http://www.example.com/api",
+            newParam: {
+                key: "",
+                value: ""
+            },
             params: [],
             completeAPIURL: "http://www.example.com/api"
         }
@@ -41,10 +46,42 @@ class APIBuilder extends Component {
         this.setState({params}, this.handleURLChange);
     }
 
-    handleAddParameterClick = () => {
+    handleAddNewParamKey = (e) => {
+        console.log('updating param key...');
+
+        let newParam = this.state.newParam;
+
+        newParam.key = e.target.value;
+
+        this.setState({
+            newParam
+        });
+    }
+
+    handleAddNewParamValue = (e) => {
+        console.log('updating param value...');
+
+        let newParam = this.state.newParam;
+
+        newParam.value = e.target.value;
+
+        this.setState({
+            newParam
+        });
+    }
+
+    handleAddNewParameterClick = () => {
         console.log('adding param..');
 
-        let newParam = {key: "value"};
+        let nKey = this.state.newParam.key,
+            nValue = this.state.newParam.value;
+
+        if(nKey === "" || nValue === "") return;
+
+        let newParam = {};
+
+        newParam[nKey] = nValue;
+
         let params = [...this.state.params];
 
         params.push(newParam);
@@ -53,7 +90,10 @@ class APIBuilder extends Component {
     }
 
     handleRequestClick = () => {
-        console.log('requesting..')
+        console.log('requesting..');
+        axios.get(this.state.completeAPIURL).then(res => {
+            console.log(res);
+        });
     }
 
     handleURLChange = () => {
@@ -93,13 +133,17 @@ class APIBuilder extends Component {
                     <FormLabel for="form_endpoint" content="API Endpoint URL" />
                     <FormInput onchange={this.handleEndpointChange} value={this.state.endpoint} name="endpoint" id="form_endpoint"  />
                 </FormRow>
-
                 {
                     params
                 }
-
                 <FormRow>
-                    <FormButton content="Add" onclick={this.handleAddParameterClick} />
+                    <FormLabel content="New Param Key:" />
+                    <FormInput onchange={this.handleAddNewParamKey} vale={this.state.newParam.key} />
+                    <FormLabel content="New Param Value" />
+                    <FormInput onchange={this.handleAddNewParamValue} vale={this.state.newParam.value} />
+                    <FormButton content="Add" onclick={this.handleAddNewParameterClick} />
+                </FormRow>
+                <FormRow>
                     <FormButton content="Request" onclick={this.handleRequestClick} />
                 </FormRow>
             </div>
