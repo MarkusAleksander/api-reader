@@ -11,13 +11,13 @@ class APIBuilder extends Component {
         super(props);
 
         this.state = {
-            endpoint: "http://openlibrary.org/books/OL1M/lists.json",
+            endpoint: "https://dog.ceo/api/breeds/image/random",
             newParam: {
                 key: "",
                 value: "",
             },
             params: [],
-            completeAPIURL: "http://openlibrary.org/books/OL1M/lists.json",
+            completeAPIURL: "https://dog.ceo/api/breeds/image/random",
         };
     }
 

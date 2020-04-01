@@ -17,7 +17,10 @@ const FormatJSON = (props) => {
             // * is array?
             if (Array.isArray(currentValue)) {
                 items.push(
-                    <div className={style["formatted-json__array"]}>
+                    <div
+                        className={style["formatted-json__array"]}
+                        key={currentKey + "__array"}
+                    >
                         {buildFormattedJSON(currentValue)}
                     </div>
                 );
@@ -27,23 +30,53 @@ const FormatJSON = (props) => {
             // * is object
             if (typeof currentValue === "object") {
                 items.push(
-                    <div className={style["formatted-json__object"]}>
+                    <div
+                        className={style["formatted-json__object"]}
+                        key={currentKey + "__object"}
+                    >
                         {buildFormattedJSON(currentValue)}
                     </div>
                 );
                 continue;
             }
 
+            let valueHTML;
+
+            // * test value HTML
+            if (/(jpg|jpeg|png|gif|svg{1,})/.test(currentValue)) {
+                valueHTML = (
+                    <div className={style["formatted-json__entry__value"]}>
+                        <span>{currentValue}</span>
+                        <div
+                            className={
+                                style[
+                                    "formatted-json__entry__value__img-wrapper"
+                                ]
+                            }
+                        >
+                            <img src={currentValue} alt="" />
+                        </div>
+                    </div>
+                );
+            } else {
+                valueHTML = (
+                    <span className={style["formatted-json__entry__value"]}>
+                        {JSON.stringify(currentValue)}
+                    </span>
+                );
+            }
+
             // * Is just key and value
             items.push(
-                <div className={style["formatted-json__entry"]}>
+                <div
+                    className={style["formatted-json__entry"]}
+                    key={currentKey + "__" + currentValue}
+                >
                     <span className={style["formatted-json__entry__key"]}>
                         {currentKey}
                     </span>
                     {" : "}
-                    <span className={style["formatted-json__entry__value"]}>
-                        {JSON.stringify(currentValue)}
-                    </span>
+                    {valueHTML}
                 </div>
             );
         }
