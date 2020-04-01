@@ -6,6 +6,9 @@ import FormInput from "./Inputs/FormInput";
 import FormLabel from "./Inputs/FormLabel";
 import FormButton from "./Inputs/FormButton";
 
+// https://dog.ceo/api/breeds/image/random
+// https://ghibliapi.herokuapp.com/films/58611129-2dbc-4a81-a72f-77ddfc1b1b49
+
 class APIBuilder extends Component {
     constructor(props) {
         super(props);
